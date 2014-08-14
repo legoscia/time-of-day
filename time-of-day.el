@@ -122,11 +122,19 @@
 (defun time-of-day--bottom-right-window-p (&optional window)
   (unless window
     (setq window (selected-window)))
-  (pcase-let ((`(,left ,top ,right ,bottom) (window-edges window)))
-    (let ((other-window (or (window-at (1+ right) top) ;XXX: check both for minibuffers?
-			    (window-at left (1+ bottom)))))
-      (or (null other-window)
-	  (eq other-window (minibuffer-window))))))
+  (and (not (time-of-day--window-ineligible-p window))
+       (pcase-let ((`(,left ,top ,right ,bottom) (window-edges window)))
+	 (let ((other-window (or (window-at (1+ right) top) ;XXX: check both for minibuffers?
+				 (window-at left (1+ bottom)))))
+	   (time-of-day--window-ineligible-p other-window)))))
+
+(defun time-of-day--window-ineligible-p (window)
+  (or (null window)
+      (eq window (minibuffer-window))
+      ;; Putting the time of day graphic in the mode line of a
+      ;; completion buffer often results in the completions being
+      ;; hidden.  Let's avoid that.
+      (equal "*Completions*" (buffer-name (window-buffer window)))))
 
 (provide 'time-of-day)
 ;;; time-of-day.el ends here
