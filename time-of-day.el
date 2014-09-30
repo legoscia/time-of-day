@@ -37,9 +37,6 @@
 
 ;;; Code:
 
-(defconst time-of-day-directory
-  (file-name-directory load-file-name))
-
 (defconst time-of-day-image-file
 ;;; tod-schedule-24hrs.png PNG 375x312 375x312+0+0 8-bit sRGB 113KB 0.000u 0:00.000
   (expand-file-name "tod-schedule-24hrs.png"
