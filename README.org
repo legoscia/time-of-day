@@ -1,0 +1,20 @@
+* time-of-day-mode
+
+=time-of-day-mode= is a global minor mode that displays an image
+representing the time of day in the mode line.  During the "day",
+it displays the sun going from sunrise to sunset, and during the
+"night", it displays the moon moving across the sky.
+
+"Day" and "night" refer to the times set in =time-of-day-dawn= and
+=time-of-day-dusk=.  By default, "day" lasts from 9 AM to 6 PM, which
+is meant to show a working day.
+
+This mode attempts to show the image only once in each frame, in
+the right-most bottom-most window.
+
+=tod-schedule-24hrs.png= was taken from [[http://wesnoth.org/][Battle for Wesnoth]], and is
+licenced under GPLv2 or later.
+
+The obligatory screenshot:
+
+[[file:screenshot.png]]
