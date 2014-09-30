@@ -18,3 +18,9 @@ licenced under GPLv2 or later.
 The obligatory screenshot:
 
 [[file:screenshot.png]]
+
+** Installation
+Keep =time-of-day.el= and =tod-schedule-24hrs.png= in the same
+directory.  Byte-compile and load =time-of-day.el=.  Then type =M-x
+time-of-day-mode= to toggle.
+
