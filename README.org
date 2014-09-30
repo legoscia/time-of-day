@@ -24,3 +24,36 @@ Keep =time-of-day.el= and =tod-schedule-24hrs.png= in the same
 directory.  Byte-compile and load =time-of-day.el=.  Then type =M-x
 time-of-day-mode= to toggle.
 
+** Known problems
+On Emacs 24.4.50 running on OSX, using this mode seems to trigger an
+infinite loop in =redisplay_internal= at irregular intervals.  I
+haven't found a reproducible recipe.  If you're running Emacs inside
+=gdb=, this can be worked around by following these steps:
+
+1. Hit =C-z= in the =gdb= window, to stop Emacs and get to the
+   debugger command line.
+2. Type =bt= to display a backtrace.
+3. Identify the outermost stack frame for =redisplay_windows=, just
+   before =redisplay_internal=.  In the following example, we need
+   frame 25:
+   #+begin_example
+   #23 0x00000001001f37f7 in internal_condition_case_1 (bfun=0x1000849d0 <redisplay_window_0>, arg=5469649813, handlers=4345323126, hfun=0x100071b00 <redisplay_window_error>) at ../../src/eval.c:1373
+   #24 0x0000000100071a33 in redisplay_windows (window=5469649813) at ../../src/xdisp.c:14227
+   #25 0x00000001000719e2 in redisplay_windows (window=5455279213) at ../../src/xdisp.c:14221
+   #26 0x000000010003db16 in redisplay_internal () at ../../src/xdisp.c:13826
+   #+end_example
+4. Type =f= and the frame number.  In the case above, this would be =f
+   25=.
+5. Type =fin=, to run until =redisplay_windows= returns.  This should
+   print something like:
+   #+begin_example
+   (gdb) fin
+   Run till exit from #25 0x00000001000719e2 in redisplay_windows (window=5455279213) at ../../src/xdisp.c:14221
+   0x000000010003db16 in redisplay_internal () at ../../src/xdisp.c:13826
+   13826                        redisplay_windows (FRAME_ROOT_WINDOW (f));
+   #+end_example
+6. Type =p f->fonts_changed = 0=.
+7. Type =c=.
+
+Sometimes the procedure above needs to be repeated two or three
+times.
