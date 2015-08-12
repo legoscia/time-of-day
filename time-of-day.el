@@ -44,9 +44,20 @@
 		     (or load-file-name
 			 buffer-file-name))))
 
-(defvar time-of-day-dawn 9)
+(defgroup time-of-day nil
+  "Graphically illustrate the passing of time in the mode line.")
 
-(defvar time-of-day-dusk 18)
+(defcustom time-of-day-dawn 9
+  "Dawn occurs at this hour.
+To specify fractions of an hour, use a floating-point value."
+  :type 'number
+  :group 'time-of-day)
+
+(defcustom time-of-day-dusk 18
+  "Dusk occurs at this hour (24-hour clock).
+To specify fractions of an hour, use a floating-point value."
+  :type 'number
+  :group 'time-of-day)
 
 (defvar time-of-day-timer nil)
 
