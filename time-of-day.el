@@ -92,13 +92,14 @@ To specify fractions of an hour, use a floating-point value."
   (if time-of-day-mode
       (progn
 	(time-of-day-update)
-	(add-to-list 'global-mode-string '(:eval (time-of-day-maybe)))
+	(add-to-list 'global-mode-string '(time-of-day-mode (:eval (time-of-day-maybe))))
 	(setq time-of-day-timer
 	      (run-with-timer 300 300 'time-of-day-update)))
     (when (timerp time-of-day-timer)
       (cancel-timer time-of-day-timer)
       (setq time-of-day-timer nil))
-    (setq global-mode-string (delete '(:eval (time-of-day-maybe)) global-mode-string))))
+    (setq global-mode-string (delete '(time-of-day-mode (:eval (time-of-day-maybe)))
+				     global-mode-string))))
 
 (defun time-of-day-update ()
   (setq time-of-day-string
