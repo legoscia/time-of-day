@@ -142,8 +142,9 @@ To specify fractions of an hour, use a floating-point value."
       (eq window (minibuffer-window))
       ;; Putting the time of day graphic in the mode line of a
       ;; completion buffer often results in the completions being
-      ;; hidden.  Let's avoid that.
-      (equal "*Completions*" (buffer-name (window-buffer window)))))
+      ;; hidden.  Let's avoid that.  Such windows usually have a
+      ;; preserved size.
+      (window-parameter window 'window-preserved-size)))
 
 (provide 'time-of-day)
 ;;; time-of-day.el ends here
