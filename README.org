@@ -19,6 +19,11 @@ The obligatory screenshot:
 
 [[file:screenshot.png]]
 
+And this is how it behaves during an entire day, using the default
+settings:
+
+[[file:animated.gif]]
+
 ** Installation
 Keep =time-of-day.el= and =tod-schedule-24hrs.png= in the same
 directory.  Byte-compile and load =time-of-day.el=.  Then type =M-x
