@@ -144,7 +144,9 @@ To specify fractions of an hour, use a floating-point value."
       ;; completion buffer often results in the completions being
       ;; hidden.  Let's avoid that.  Such windows usually have a
       ;; preserved size.
-      (window-parameter window 'window-preserved-size)))
+      (let ((preserved-size (window-parameter window 'window-preserved-size)))
+	(and preserved-size
+	     (eq (car preserved-size) (window-buffer window))))))
 
 (provide 'time-of-day)
 ;;; time-of-day.el ends here
